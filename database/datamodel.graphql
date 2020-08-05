@@ -1,0 +1,86 @@
+type Post {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  isPublished: Boolean! @default(value: "false")
+  title: String!
+  text: String!
+  author: User!
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  posts: [Post!]!
+  isManager: Boolean! @default(value: "false")
+  phoneNumber: String!
+  location: Location
+  jobsAppliedTo: [Job]
+  ratings: [Rating]
+  picture: Picture
+}
+
+type Location {
+  id: ID! @unique
+  lat: Float!
+  lng: Float!
+  neighbourHood: Neighbourhood
+  user: User
+  space: Space
+  address: String
+  directions: String
+}
+
+type Neighbourhood {
+  id: ID! @unique
+  locations: [Location!]!
+  name: String!
+  slug: String
+  homePreview: Picture
+  city: City!
+  featured: Boolean! @default(value: "false")
+}
+
+type City {
+  id: ID! @unique
+  name: String!
+  neighbourhoods: [Neighbourhood!]!
+}
+
+type Picture {
+  id: ID! @unique
+  url: String!
+}
+
+type Job {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  position: String!
+  timeSchedule: String!
+  compensation: String!
+  experience: String!
+  description: String!
+  location: Location
+}
+
+type Company {
+  name: String!
+  managers: [User!]!
+  hours: String!
+  phoneNumber: String!
+  location: Location
+  jobsPosted: [Job]
+  employees: [User!]!
+  ratings: [Rating]
+  pictures: [Picture]
+}
+
+type Rating {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: Float!
+  comment: String!
+}
